@@ -1,18 +1,22 @@
 package com.zookeeper.rest.Models;
 
-import org.springframework.data.annotation.Id;
+
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+
 
 @Entity
 public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long userID;
+	private long id;
 	
 	@Column
 	private String firstName;
@@ -23,13 +27,13 @@ public class User {
 	@Column
 	private String title;
 	
-	public long getUserID() {
-		return userID;
+	public long getId() {
+		return id;
 	}
-	
-	public void setUserID(long userID) {
-		this.userID = userID;
-	}
+
+	public void setId(long id) {
+		this.id = id;
+	}	
 	
 	public String getFirstName() {
 		return firstName;
@@ -54,5 +58,6 @@ public class User {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	
 }
