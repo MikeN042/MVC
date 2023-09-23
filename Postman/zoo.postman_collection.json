@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "fdd56404-2119-4384-a3c6-3d89164accae",
+		"name": "zoo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2889472"
+	},
+	"item": [
+		{
+			"name": "localhost:8080/users/new",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\":\"Frodo\",\r\n    \"lastName\":\"Baggins\",\r\n    \"title\":\"Zookeeper\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/new",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/users",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/users/update/1",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"firstName\": \"Bilbo\",\r\n        \"lastName\": \"Baggins\",\r\n        \"title\": \"Senior Zookeeper\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/users/update/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"update",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/users/remove/2",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/users/remove/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"remove",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/animals",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/animals",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"animals"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/animals/1/remove",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/animals/4/remove",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"animals",
+						"4",
+						"remove"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/animals/new",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n    \"name\":\"Pumbaa\",\r\n    \"species\":\"Warthob\",\r\n    \"birthdate\":\"2017-01-01\"\r\n\r\n\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/animals/new",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"animals",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/animals/feedings",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/animals/feedings",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"animals",
+						"feedings"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
