@@ -7,9 +7,9 @@ const AnimalList = ({animals,keeper,handleDelete}) => {
             {animals.map((animal) => (
                 <div className = 'animal-preview' key={animal.id}>
                     <h2>{animal.name}</h2>
-                    <p>Enclolsure: {animal.enclosure}, Temperment:
-                        <span style={animal.temperment === 'Agressive' ? {"fontWeight":"bold","color":"#f1356d"}:{} }> 
-                        {` ${animal.temperment}`}
+                    <p>Enclolsure: {animal.enclosure}, Temperament:
+                        <span style={animal.temperament === 'Agressive' ? {"fontWeight":"bold","color":"#f1356d"}:{} }> 
+                        {` ${animal.temperament}`}
                         </span> </p>
                     <p>Last Fed: {animal.lastFeedingTime}</p> 
                     <button onClick={()=>handleDelete(animal.id)}>delete animal</button>
