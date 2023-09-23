@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zookeeper.rest.Controller.Repo.KeeperRepo;
 import com.zookeeper.rest.Models.Keeper;
+import com.zookeeper.rest.Repo.KeeperRepo;
 
 @RestController
 @RequestMapping("/keeper")
@@ -23,40 +23,35 @@ public class KeeperController {
 	@Autowired
 	private KeeperRepo keeperRepo;
 	
+
 	@GetMapping(value="/")
-	public String getPage() {
-		return "Welcome";
-		
-	}
-	
-	@GetMapping(value="/")
-	public List<Keeper> getUsers() {
+	public List<Keeper> getKeepers() {
 		return keeperRepo.findAll();
 		
 	}
 	
 	@PostMapping(value="/new")
-	public String saveUser (@RequestBody Keeper user) {
-		keeperRepo.save(user);
+	public String saveKeeper (@RequestBody Keeper keeper) {
+		keeperRepo.save(keeper);
 		return "Success!";
 	}
 
 	@PutMapping(value="/update/{id}")
-	public String updateUser (@PathVariable long id,@RequestBody Keeper user) {
+	public String updateKeeper (@PathVariable long id,@RequestBody Keeper keeper) {
 		Optional<Keeper> optUser = keeperRepo.findById(id);
 		if (!optUser.isPresent()) {
 			return "User of id = " + id + " not found";
 		}
 		Keeper targetUser = optUser.get();
-		targetUser.setFirstName(user.getFirstName());
-		targetUser.setLastName(user.getLastName());
-		targetUser.setTitle(user.getTitle());
+		targetUser.setFirstName(keeper.getFirstName());
+		targetUser.setLastName(keeper.getLastName());
+		targetUser.setTitle(keeper.getTitle());
 		keeperRepo.save(targetUser);
 		return "Updated!";
 	}
 	
 	@DeleteMapping(value="/remove/{id}")
-	public String deleteUser (@PathVariable long id) {
+	public String deleteKeeper (@PathVariable long id) {
 		
 		Keeper targetUser = keeperRepo.findById(id).get();
 		keeperRepo.delete(targetUser);
