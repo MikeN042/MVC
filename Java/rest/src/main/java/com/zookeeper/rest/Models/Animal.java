@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -23,7 +25,7 @@ public class Animal {
 	
 	private long age;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "keeper_id", referencedColumnName = "id")
 	private Keeper keeper;
 	
@@ -62,7 +64,7 @@ public class Animal {
 
 	public void setBirthdate(Date birthdate) {
 		long todaysDateInMS = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()).getTime();
-		long ageDifferenceInMS  = birthdate.getTime() - todaysDateInMS;
+		long ageDifferenceInMS  =  todaysDateInMS - birthdate.getTime();
 		/*conversion for ms to year
 		    1 year = 365 days
 			1 day = 24 hours

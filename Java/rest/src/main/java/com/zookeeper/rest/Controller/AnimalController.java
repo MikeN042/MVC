@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +23,10 @@ import com.zookeeper.rest.Models.Animal;
 import com.zookeeper.rest.Models.Feeding;
 import com.zookeeper.rest.Models.Keeper;
 
+import DTO.AnimalDTO;
+
 @RestController
-@RequestMapping("/animals")
+@RequestMapping("/animal")
 public class AnimalController {
 	
 	@Autowired
@@ -32,27 +36,34 @@ public class AnimalController {
 	@Autowired
 	public KeeperRepo keeperRepo;
 	
-	@GetMapping(value="/")
+	@GetMapping("/")
 	public List<Animal> getAnimals() {
 		return animalRepo.findAll();
 	}
 	
-	@GetMapping(value="/{id}")
+	@GetMapping("/{id}")
 	public Optional<Animal> getAnimal(@PathVariable long id) {		
 		return animalRepo.findById(null);
 	}
 	
-	@PostMapping(value="/new")
-	public String addAnimal(@RequestBody Animal animal) {
-		animalRepo.save(animal);
+	@PostMapping("/new")
+	public ResponseEntity<Animal> addAnimal(@RequestBody AnimalDTO animalDTO) {
+		Optional<Keeper> keeper = keeperRepo.findById(animalDTO.getKeeperID());
 		
-		System.out.println(animal.getKeeper());
-		
-		
-		return animal.getName() + " has been added";
+		if(keeper.isPresent()) {
+			Animal animal = new Animal();
+			animal.setName(animalDTO.getName());
+			animal.setSpecies(animalDTO.getSpecies());
+			animal.setBirthdate(animalDTO.getBirthdate());
+			animal.setKeeper(keeper.get());
+			animalRepo.save(animal);
+			return new ResponseEntity<>(animal,HttpStatus.CREATED);
+		}
+
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
-	@PostMapping(value="/{id}/feed")
+	@PostMapping("/{id}/feed")
 	public String feedAnimal(@PathVariable Long id, @RequestParam Long userID) {
 		
 		Optional<Keeper> user = keeperRepo.findById(userID);		
@@ -69,12 +80,12 @@ public class AnimalController {
 		return "feeding recorded!";
 	}
 	
-	@GetMapping(value="/feedings")
+	@GetMapping("/feedings")
 	public List<Feeding> getAllFeedings() {
 		return feedingRepo.findAll();
 	}
 	
-	@DeleteMapping(value="/{id}/remove")
+	@DeleteMapping("/{id}/remove")
 	public String removeAnimal(@PathVariable Long id) {
 		Optional<Animal> animal = animalRepo.findById(id);
 		if (animal.isPresent()) {
