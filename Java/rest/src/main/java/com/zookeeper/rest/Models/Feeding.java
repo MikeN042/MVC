@@ -12,8 +12,8 @@ public class Feeding {
 	private long id;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id", referencedColumnName = "id")
-	private User user;
+	@JoinColumn(name = "keeper_id", referencedColumnName = "id")
+	private Keeper keeper;
 
 	@ManyToOne
 	@JoinColumn(name = "animal_id", referencedColumnName = "id")
@@ -25,8 +25,8 @@ public class Feeding {
 	
    public Feeding() {}
   
-   public Feeding (User theUser, Animal theAnimal, LocalDateTime theDate) {
-	   user = theUser;  
+   public Feeding (Keeper theUser, Animal theAnimal, LocalDateTime theDate) {
+	   keeper = theUser;  
 	   animal = theAnimal; 
 	   date = theDate;  
    }
@@ -39,12 +39,12 @@ public class Feeding {
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
+	public Keeper getUser() {
+		return keeper;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUser(Keeper user) {
+		this.keeper = user;
 	}
 
 	public Animal getAnimal() {

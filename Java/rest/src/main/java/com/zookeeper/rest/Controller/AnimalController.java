@@ -10,17 +10,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zookeeper.rest.Controller.Repo.AnimalRepo;
 import com.zookeeper.rest.Controller.Repo.FeedingRepo;
-import com.zookeeper.rest.Controller.Repo.UserRepo;
+import com.zookeeper.rest.Controller.Repo.KeeperRepo;
 import com.zookeeper.rest.Models.Animal;
 import com.zookeeper.rest.Models.Feeding;
-import com.zookeeper.rest.Models.User;
+import com.zookeeper.rest.Models.Keeper;
 
 @RestController
+@RequestMapping("/animals")
 public class AnimalController {
 	
 	@Autowired
@@ -28,28 +30,32 @@ public class AnimalController {
 	@Autowired
 	public FeedingRepo feedingRepo;
 	@Autowired
-	public UserRepo userRepo;
+	public KeeperRepo keeperRepo;
 	
-	@GetMapping(value="/animals")
+	@GetMapping(value="/")
 	public List<Animal> getAnimals() {
 		return animalRepo.findAll();
 	}
 	
-	@GetMapping(value="/animals/{id}")
+	@GetMapping(value="/{id}")
 	public Optional<Animal> getAnimal(@PathVariable long id) {		
 		return animalRepo.findById(null);
 	}
 	
-	@PostMapping(value="/animals/new")
+	@PostMapping(value="/new")
 	public String addAnimal(@RequestBody Animal animal) {
 		animalRepo.save(animal);
+		
+		System.out.println(animal.getKeeper());
+		
+		
 		return animal.getName() + " has been added";
 	}
 	
-	@PostMapping(value="/animals/{id}/feed")
+	@PostMapping(value="/{id}/feed")
 	public String feedAnimal(@PathVariable Long id, @RequestParam Long userID) {
 		
-		Optional<User> user = userRepo.findById(userID);		
+		Optional<Keeper> user = keeperRepo.findById(userID);		
 		if (!user.isPresent()){
 			return "UserID = " + userID + " not found!";
 		}
@@ -63,12 +69,12 @@ public class AnimalController {
 		return "feeding recorded!";
 	}
 	
-	@GetMapping(value="/animals/feedings")
+	@GetMapping(value="/feedings")
 	public List<Feeding> getAllFeedings() {
 		return feedingRepo.findAll();
 	}
 	
-	@DeleteMapping(value="animals/{id}/remove")
+	@DeleteMapping(value="/{id}/remove")
 	public String removeAnimal(@PathVariable Long id) {
 		Optional<Animal> animal = animalRepo.findById(id);
 		if (animal.isPresent()) {

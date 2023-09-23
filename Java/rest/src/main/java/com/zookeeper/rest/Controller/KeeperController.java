@@ -10,16 +10,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zookeeper.rest.Controller.Repo.UserRepo;
-import com.zookeeper.rest.Models.User;
+import com.zookeeper.rest.Controller.Repo.KeeperRepo;
+import com.zookeeper.rest.Models.Keeper;
 
 @RestController
-public class UserController {
+@RequestMapping("/keeper")
+public class KeeperController {
 	
 	@Autowired
-	private UserRepo userRepo;
+	private KeeperRepo keeperRepo;
 	
 	@GetMapping(value="/")
 	public String getPage() {
@@ -27,37 +29,37 @@ public class UserController {
 		
 	}
 	
-	@GetMapping(value="/users")
-	public List<User> getUsers() {
-		return userRepo.findAll();
+	@GetMapping(value="/")
+	public List<Keeper> getUsers() {
+		return keeperRepo.findAll();
 		
 	}
 	
-	@PostMapping(value="/users/new")
-	public String saveUser (@RequestBody User user) {
-		userRepo.save(user);
+	@PostMapping(value="/new")
+	public String saveUser (@RequestBody Keeper user) {
+		keeperRepo.save(user);
 		return "Success!";
 	}
 
-	@PutMapping(value="/users/update/{id}")
-	public String updateUser (@PathVariable long id,@RequestBody User user) {
-		Optional<User> optUser = userRepo.findById(id);
+	@PutMapping(value="/update/{id}")
+	public String updateUser (@PathVariable long id,@RequestBody Keeper user) {
+		Optional<Keeper> optUser = keeperRepo.findById(id);
 		if (!optUser.isPresent()) {
 			return "User of id = " + id + " not found";
 		}
-		User targetUser = optUser.get();
+		Keeper targetUser = optUser.get();
 		targetUser.setFirstName(user.getFirstName());
 		targetUser.setLastName(user.getLastName());
 		targetUser.setTitle(user.getTitle());
-		userRepo.save(targetUser);
+		keeperRepo.save(targetUser);
 		return "Updated!";
 	}
 	
-	@DeleteMapping(value="/users/remove/{id}")
+	@DeleteMapping(value="/remove/{id}")
 	public String deleteUser (@PathVariable long id) {
 		
-		User targetUser = userRepo.findById(id).get();
-		userRepo.delete(targetUser);
+		Keeper targetUser = keeperRepo.findById(id).get();
+		keeperRepo.delete(targetUser);
 		return "User Deleted!";
 	}
 	

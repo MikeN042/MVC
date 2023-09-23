@@ -2,8 +2,8 @@ package com.zookeeper.rest.Controller.Repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.zookeeper.rest.Models.User;
+import com.zookeeper.rest.Models.Keeper;
 
-public interface UserRepo extends JpaRepository<User,Long> {
+public interface KeeperRepo extends JpaRepository<Keeper,Long> {
 
 }
