@@ -1,4 +1,4 @@
-package DTO;
+package com.zookeeper.rest.DTO;
 
 import java.sql.Date;
 
@@ -8,6 +8,8 @@ public class AnimalDTO {
 	private String species;
 	private Date birthdate;
 	private Long keeperID;
+	private String enclosure;
+	private String temperament;
 	
 	public String getName() {
 		return name;
@@ -32,6 +34,18 @@ public class AnimalDTO {
 	}
 	public void setKeeperID(Long keeperID) {
 		this.keeperID = keeperID;
+	}
+	public String getEnclosure() {
+		return enclosure;
+	}
+	public void setEnclosure(String enclosure) {
+		this.enclosure = enclosure;
+	}
+	public String getTemperament() {
+		return temperament;
+	}
+	public void setTemperament(String temperament) {
+		this.temperament = temperament;
 	}
 	
 

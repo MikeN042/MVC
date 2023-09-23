@@ -23,6 +23,12 @@ public class Animal {
 	@Column
 	private Date birthdate;
 	
+	@Column
+	private String enclosure;
+	
+	@Column
+	private String temperament;
+	
 	private long age;
 
 	@ManyToOne
@@ -90,5 +96,28 @@ public class Animal {
 
 	public void setKeeper(Keeper keeper) {
 		this.keeper = keeper;
+	}
+	public String getEnclosure() {
+		return enclosure;
+	}
+
+	public void setEnclosure(String enclosure) {
+		this.enclosure = enclosure;
+	}
+
+	public String getTemperament() {
+		return temperament;
+	}
+
+	public void setTemperament(String temperament) {
+		this.temperament = temperament;
+	}
+
+	public LocalDateTime getLastFeedingTime() {
+		return LastFeedingTime;
+	}
+
+	public void setLastFeedingTime(LocalDateTime lastFeedingTime) {
+		LastFeedingTime = lastFeedingTime;
 	}
 }

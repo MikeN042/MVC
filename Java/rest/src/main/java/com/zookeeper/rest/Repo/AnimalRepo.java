@@ -1,4 +1,4 @@
-package com.zookeeper.rest.Controller.Repo;
+package com.zookeeper.rest.Repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

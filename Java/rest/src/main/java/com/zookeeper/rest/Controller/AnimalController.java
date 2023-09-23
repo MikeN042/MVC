@@ -16,14 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zookeeper.rest.Controller.Repo.AnimalRepo;
-import com.zookeeper.rest.Controller.Repo.FeedingRepo;
-import com.zookeeper.rest.Controller.Repo.KeeperRepo;
+import com.zookeeper.rest.DTO.AnimalDTO;
 import com.zookeeper.rest.Models.Animal;
 import com.zookeeper.rest.Models.Feeding;
 import com.zookeeper.rest.Models.Keeper;
-
-import DTO.AnimalDTO;
+import com.zookeeper.rest.Repo.AnimalRepo;
+import com.zookeeper.rest.Repo.FeedingRepo;
+import com.zookeeper.rest.Repo.KeeperRepo;
 
 @RestController
 @RequestMapping("/animal")
@@ -36,7 +35,7 @@ public class AnimalController {
 	@Autowired
 	public KeeperRepo keeperRepo;
 	
-	@GetMapping("/")
+	@GetMapping
 	public List<Animal> getAnimals() {
 		return animalRepo.findAll();
 	}
@@ -56,6 +55,8 @@ public class AnimalController {
 			animal.setSpecies(animalDTO.getSpecies());
 			animal.setBirthdate(animalDTO.getBirthdate());
 			animal.setKeeper(keeper.get());
+			animal.setTemperament(animalDTO.getTemperament());
+			animal.setEnclosure(animalDTO.getEnclosure());
 			animalRepo.save(animal);
 			return new ResponseEntity<>(animal,HttpStatus.CREATED);
 		}
