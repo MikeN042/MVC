@@ -3,9 +3,17 @@ import Home from './components/Home';
 import CreateAnimal from './components/CreateAnimal';
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom'
 import AnimalDetails from './components/AnimalDetails';
+import NotFound from './components/NotFound';
+import useFetch from "./hooks/useFetch";
+
 
 
 function App() {
+
+  const data = useFetch('http://localhost:8080/animal')
+  const {refresh} = data
+
+
   return (
     <Router>
       <div className="App">
@@ -13,13 +21,16 @@ function App() {
         <div className="content">
           <Switch>
             <Route exact path="/">
-              <Home />
+              <Home animalData={data} />
             </Route>
             <Route path="/create/animal">
-              <CreateAnimal />
+              <CreateAnimal animalData={data}  />
             </Route>
             <Route path="/animal/:id" >
-              <AnimalDetails />
+              <AnimalDetails animalData={data}  />
+            </Route>
+            <Route path="*">
+              <NotFound />
             </Route>
           </Switch>
         </div>
