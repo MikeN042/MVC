@@ -1,29 +1,16 @@
 import { useState, useEffect } from "react"
 import AnimalList from "./AnimalList";
-
+import useFetch from "../hooks/useFetch";
 const Home = () => {
 
-    const [animals,setAnimals] = useState([])
 
-    const handleDelete = (id) => {
-        const newAnimals = animals.filter(animal=>animal.id !== id)
-        setAnimals(newAnimals)
-    }
-
-    useEffect(()=>{
-        fetch('http://localhost:8080/animal')
-        .then(res =>{
-            return res.json()
-        })
-        .then(data=>{
-            console.log(data)
-            setAnimals(data)
-        })
-    },[])
+const {data: animals,isLoading,error} = useFetch('http://localhost:8080/animal')
 
     return ( 
         <div className="home">
-            <AnimalList animals={animals} keeper='Bilbo' handleDelete={handleDelete}/>
+            {error &&  <div>{error}</div>}
+            {isLoading && <div>Loading...</div>}
+            {animals && <AnimalList animals={animals} keeper='Bilbo'/>}
         </div>
 
      );

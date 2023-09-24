@@ -12,7 +12,6 @@ const AnimalList = ({animals,keeper,handleDelete}) => {
                         {` ${animal.temperament}`}
                         </span> </p>
                     <p>Last Fed: {animal.lastFeedingTime}</p> 
-                    <button onClick={()=>handleDelete(animal.id)}>delete animal</button>
                 </div>
             ))}
 
