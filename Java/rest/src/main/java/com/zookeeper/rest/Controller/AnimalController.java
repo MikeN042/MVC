@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zookeeper.rest.DTO.AnimalDTO;
+import com.zookeeper.rest.DTO.FeedingDTO;
 import com.zookeeper.rest.Models.Animal;
 import com.zookeeper.rest.Models.Feeding;
 import com.zookeeper.rest.Models.Keeper;
@@ -67,7 +68,7 @@ public class AnimalController {
 	}
 	
 	@PostMapping("/new")
-	public ResponseEntity<Animal> addAnimal(@RequestBody AnimalDTO animalDTO) {
+	public ResponseEntity<String> addAnimal(@RequestBody AnimalDTO animalDTO) {
 		Optional<Keeper> keeper = keeperRepo.findById(animalDTO.getKeeperID());
 		
 		if(keeper.isPresent()) {
@@ -79,42 +80,54 @@ public class AnimalController {
 			animal.setTemperament(animalDTO.getTemperament());
 			animal.setEnclosure(animalDTO.getEnclosure());
 			animalRepo.save(animal);
-			return new ResponseEntity<>(animal,HttpStatus.CREATED);
+			return new ResponseEntity<>("Animal Added",HttpStatus.CREATED);
 		}
 
 		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
-	@PostMapping("/{id}/feed")
-	public String feedAnimal(@PathVariable Long id, @RequestParam Long userID) {
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<String> deleteAnimal(@PathVariable Long id){
+		feedingRepo.deleteAll(feedingRepo.findByAnimalId(id));
+		animalRepo.deleteById(id);
+		return new ResponseEntity<>("Removed",HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("/{id}/feedings")
+	public ResponseEntity<List<FeedingDTO>> getFeedingByAnimal(@PathVariable Long id){
+			List<Feeding> feedings = feedingRepo.findByAnimalId(id);
+			List<FeedingDTO> feedingsDTO = new ArrayList<FeedingDTO>();
+			feedings.forEach(feeding->feedingsDTO.add(modelMapper.map(feeding, FeedingDTO.class)));
+			return new ResponseEntity<>(feedingsDTO,HttpStatus.ACCEPTED);
+		}
 		
-		Optional<Keeper> user = keeperRepo.findById(userID);		
+	@PostMapping("/{id}/feed")
+	public ResponseEntity<String> feedAnimal(@PathVariable Long id, @RequestParam Long keeperID) {
+		
+		
+		Optional<Keeper> user = keeperRepo.findById(keeperID);		
 		if (!user.isPresent()){
-			return "UserID = " + userID + " not found!";
+			return new ResponseEntity<>("Keeper not found",HttpStatus.NOT_FOUND);
 		}
 		
 		Optional<Animal> animal = animalRepo.findById(id);
 		if (!animal.isPresent()) {
-			return "AnimalID = " + id + " not found!";
+			return new ResponseEntity<>("Animal not found",HttpStatus.NOT_FOUND);
 		}
 		
-		feedingRepo.save(new Feeding(user.get(),animal.get(),LocalDateTime.now()));
-		return "feeding recorded!";
+		LocalDateTime feedingTime = LocalDateTime.now();
+		Animal animalUpdate = animal.get();
+		animalUpdate.setLastFeedingTime(feedingTime);
+		System.out.println(animalUpdate.getLastFeedingTime());
+		animalRepo.save(animalUpdate);
+		
+		feedingRepo.save(new Feeding(user.get(),animalUpdate,feedingTime));
+		return new ResponseEntity<>("Feeding Recorded",HttpStatus.ACCEPTED);
 	}
 	
-	@GetMapping("/feedings")
-	public List<Feeding> getAllFeedings() {
-		return feedingRepo.findAll();
+	@DeleteMapping("/feedings/delete/{id}")
+	public ResponseEntity<String>  deleteFeeding(@PathVariable Long id){
+		feedingRepo.deleteById(id);
+		return new ResponseEntity<>("Removed",HttpStatus.ACCEPTED);
 	}
-	
-	@DeleteMapping("/{id}/remove")
-	public String removeAnimal(@PathVariable Long id) {
-		Optional<Animal> animal = animalRepo.findById(id);
-		if (animal.isPresent()) {
-			animalRepo.deleteById(id);
-			return animal.get().getName() + " has been removed";
-		}
-		return "Animal of id = " + id + " was not found";
-	}
-
 }

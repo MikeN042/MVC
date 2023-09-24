@@ -3,6 +3,7 @@ package com.zookeeper.rest.DTO;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 public class AnimalDTO {
 	
@@ -17,6 +18,7 @@ public class AnimalDTO {
 	private Long keeperID;
 	private String keeperFirstName;
 	private String keeperLastName;
+	private String lastFeedingTime;
 	
 	public String getName() {
 		return name;
@@ -96,6 +98,16 @@ public class AnimalDTO {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public String getLastFeedingTime() {
+		return lastFeedingTime;
+	}
+	public void setLastFeedingTime(LocalDateTime lastFeedingTime) {
+		this.lastFeedingTime = null;
+		if(lastFeedingTime != null) {
+			this.lastFeedingTime = lastFeedingTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		}
+
 	}
 	
 

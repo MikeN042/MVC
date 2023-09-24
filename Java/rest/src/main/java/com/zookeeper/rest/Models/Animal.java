@@ -2,10 +2,6 @@ package com.zookeeper.rest.Models;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -35,8 +31,7 @@ public class Animal {
 	
 	@Column
 	private LocalDateTime LastFeedingTime;
-
-
+	
 	
 	public long getId() {
 		return id;
