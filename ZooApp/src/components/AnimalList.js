@@ -1,3 +1,5 @@
+import {Link} from 'react-router-dom';
+
 const AnimalList = ({animals,keeper,handleDelete}) => {
     
 
@@ -6,12 +8,14 @@ const AnimalList = ({animals,keeper,handleDelete}) => {
             <h2>{keeper}</h2>
             {animals.map((animal) => (
                 <div className = 'animal-preview' key={animal.id}>
-                    <h2>{animal.name}</h2>
-                    <p>Enclolsure: {animal.enclosure}, Temperament:
-                        <span style={animal.temperament === 'Agressive' ? {"fontWeight":"bold","color":"#f1356d"}:{} }> 
-                        {` ${animal.temperament}`}
-                        </span> </p>
-                    <p>Last Fed: {animal.lastFeedingTime}</p> 
+                    <Link to={`/animal/${animal.id}`}>
+                        <h2>{animal.name}</h2>
+                        <p>Enclolsure: {animal.enclosure}, Temperament:
+                            <span style={animal.temperamentWarning === 1 ? {"fontWeight":"bold","color":"#f1356d"}:{} }> 
+                            {` ${animal.temperament}`}
+                            </span> </p>
+                        <p>Last Fed: {animal.lastFeedingTime}</p> 
+                    </Link>
                 </div>
             ))}
 

@@ -1,17 +1,30 @@
 import Navbar from './components/Navbar';
 import Home from './components/Home';
-
+import CreateAnimal from './components/CreateAnimal';
+import {BrowserRouter as Router,Route,Switch} from 'react-router-dom'
+import AnimalDetails from './components/AnimalDetails';
 
 
 function App() {
-  const title = 'Wonderland Zoo'
   return (
-    <div className="App">
-      <Navbar />
-      <div className="content">
-        <Home />
+    <Router>
+      <div className="App">
+        <Navbar />
+        <div className="content">
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/create/animal">
+              <CreateAnimal />
+            </Route>
+            <Route path="/animal/:id" >
+              <AnimalDetails />
+            </Route>
+          </Switch>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
 

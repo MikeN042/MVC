@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react"
 import AnimalList from "./AnimalList";
 import useFetch from "../hooks/useFetch";
+
 const Home = () => {
 
 

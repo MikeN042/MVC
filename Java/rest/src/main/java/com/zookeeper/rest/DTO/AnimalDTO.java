@@ -6,6 +6,7 @@ import java.time.ZoneId;
 
 public class AnimalDTO {
 	
+	private String id;
 	private String name;
 	private String species;
 	private String enclosure;
@@ -89,6 +90,12 @@ public class AnimalDTO {
 	}
 	public void setAge(Long age) {
 		this.age = age;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 
