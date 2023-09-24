@@ -24,19 +24,19 @@ public class KeeperController {
 	private KeeperRepo keeperRepo;
 	
 
-	@GetMapping(value="/")
+	@GetMapping
 	public List<Keeper> getKeepers() {
 		return keeperRepo.findAll();
 		
 	}
 	
-	@PostMapping(value="/new")
+	@PostMapping("/new")
 	public String saveKeeper (@RequestBody Keeper keeper) {
 		keeperRepo.save(keeper);
 		return "Success!";
 	}
 
-	@PutMapping(value="/update/{id}")
+	@PutMapping("/update/{id}")
 	public String updateKeeper (@PathVariable long id,@RequestBody Keeper keeper) {
 		Optional<Keeper> optUser = keeperRepo.findById(id);
 		if (!optUser.isPresent()) {
@@ -50,7 +50,7 @@ public class KeeperController {
 		return "Updated!";
 	}
 	
-	@DeleteMapping(value="/remove/{id}")
+	@DeleteMapping("/remove/{id}")
 	public String deleteKeeper (@PathVariable long id) {
 		
 		Keeper targetUser = keeperRepo.findById(id).get();

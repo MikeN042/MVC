@@ -20,7 +20,7 @@ const AnimalDetails = () => {
                     </div>
                     <div className="col">
                     <span > Temperament</span>
-                        <p style={animal.temperamentWarning === 1 ?{'color':'#f1356d','font-weight':'bold'}:{}}>{animal.temperament}</p>
+                        <p style={animal.temperamentWarning === 1 ?{'color':'#f1356d',"fontWeight":"bold"}:{}}>{animal.temperament}</p>
                     </div>
                     <div className="col">
                     <span >Species</span>
