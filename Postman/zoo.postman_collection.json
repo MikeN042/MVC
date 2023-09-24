@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "localhost:8080/users/new",
+			"name": "localhost:8080/keeper/new",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -21,13 +21,13 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/users/new",
+					"raw": "localhost:8080/keeper/new",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"users",
+						"keeper",
 						"new"
 					]
 				}
@@ -35,54 +35,25 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8080/users",
+			"name": "localhost:8080/keeper",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/users",
+					"raw": "localhost:8080/keeper",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"users"
+						"keeper"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "localhost:8080/users/update/1",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "    {\r\n        \"firstName\": \"Bilbo\",\r\n        \"lastName\": \"Baggins\",\r\n        \"title\": \"Senior Zookeeper\"\r\n    }",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:8080/users/update/1",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"users",
-						"update",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "localhost:8080/users/remove/2",
+			"name": "localhost:8080/keeper/remove/2",
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -107,13 +78,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/animals",
+					"raw": "http://localhost:8080/animal",
+					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"animals"
+						"animal"
 					]
 				}
 			},
@@ -125,15 +97,16 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/animals/4/remove",
+					"raw": "http://localhost:8080/animal/delete/2",
+					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"animals",
-						"4",
-						"remove"
+						"animal",
+						"delete",
+						"2"
 					]
 				}
 			},
@@ -146,7 +119,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\r\n    \"name\":\"Pumbaa\",\r\n    \"species\":\"Warthob\",\r\n    \"birthdate\":\"2017-01-01\"\r\n\r\n\r\n\r\n}",
+					"raw": "{\r\n\r\n    \"name\":\"Maleficent\",\r\n    \"species\":\"Dragon\",\r\n    \"birthdate\":\"1486-10-31\",\r\n    \"keeperID\":2,\r\n    \"enclosure\":\"ME-01\",\r\n    \"temperament\":\"Deadly\",\r\n    \"age\":5090\r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -154,14 +127,21 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8080/animals/new",
+					"raw": "localhost:8080/animal/new",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"animals",
+						"animal",
 						"new"
+					],
+					"query": [
+						{
+							"key": "KeeperID",
+							"value": "1",
+							"disabled": true
+						}
 					]
 				}
 			},
@@ -173,13 +153,67 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "localhost:8080/animals/feedings",
+					"raw": "http://localhost:8080/animal/1/feed?keeperID=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"animal",
+						"1",
+						"feed"
+					],
+					"query": [
+						{
+							"key": "keeperID",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/animals/3/feed?userID=1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/animals/3/feed?userID=1",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
 						"animals",
+						"3",
+						"feed"
+					],
+					"query": [
+						{
+							"key": "userID",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:8080/animal/2/feedings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/animal/1/feedings",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"animal",
+						"1",
 						"feedings"
 					]
 				}
