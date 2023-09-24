@@ -1,9 +1,11 @@
 package com.zookeeper.rest.Controller;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,21 +30,40 @@ import com.zookeeper.rest.Repo.KeeperRepo;
 @RequestMapping("/animal")
 public class AnimalController {
 	
+	private final ModelMapper modelMapper;
+
+	
 	@Autowired
 	public AnimalRepo animalRepo;
 	@Autowired
 	public FeedingRepo feedingRepo;
 	@Autowired
 	public KeeperRepo keeperRepo;
+	@Autowired
+	public AnimalController(ModelMapper modelMapper) {
+		this.modelMapper = modelMapper;
+	}
 	
 	@GetMapping
-	public List<Animal> getAnimals() {
-		return animalRepo.findAll();
+	public ResponseEntity<List<AnimalDTO>> getAnimals() {
+		List<Animal> animals = animalRepo.findAll();
+		List<AnimalDTO> animalDTOs = new ArrayList<AnimalDTO>();
+		animals.forEach(animal->animalDTOs.add(modelMapper.map(animal,AnimalDTO.class)));
+		
+		return new ResponseEntity<>(animalDTOs,HttpStatus.ACCEPTED);
 	}
 	
 	@GetMapping("/{id}")
-	public Optional<Animal> getAnimal(@PathVariable long id) {		
-		return animalRepo.findById(null);
+	public ResponseEntity<AnimalDTO> getAnimal(@PathVariable long id) {	
+		Optional<Animal> animal = animalRepo.findById(id);
+		
+		
+		if(animal.isPresent()) {
+			AnimalDTO animalDTO = modelMapper.map(animal.get(),AnimalDTO.class);
+			return new ResponseEntity<>(animalDTO,HttpStatus.ACCEPTED);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
 	@PostMapping("/new")

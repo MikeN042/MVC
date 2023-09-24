@@ -28,8 +28,6 @@ public class Animal {
 	
 	@Column
 	private String temperament;
-	
-	private long age;
 
 	@ManyToOne
 	@JoinColumn(name = "keeper_id", referencedColumnName = "id")
@@ -69,25 +67,7 @@ public class Animal {
 	}
 
 	public void setBirthdate(Date birthdate) {
-		long todaysDateInMS = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()).getTime();
-		long ageDifferenceInMS  =  todaysDateInMS - birthdate.getTime();
-		/*conversion for ms to year
-		    1 year = 365 days
-			1 day = 24 hours
-			1 hour = 60 minutes
-			1 minute = 60 seconds
-			1 second = 1,000 milliseconds
-		 */
-		this.setAge(ageDifferenceInMS / 1000 /  60 / 24 / 365);
 		this.birthdate = birthdate;
-	}
-
-	public long getAge() {
-		return age;
-	}
-
-	private void setAge(long age) {
-		this.age = age;
 	}
 
 	public Keeper getKeeper() {
