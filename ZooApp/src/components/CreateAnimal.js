@@ -1,17 +1,21 @@
 import { useState } from "react"
 import useFetch from "../hooks/useFetch";
+import {useHistory} from 'react-router-dom';
 
 
 
-const CreateAnimal = () => {
+const CreateAnimal = ({animalData}) => {
     const [name,setName] = useState('');
     const [species,setSpecies] = useState('');
     const [birthdate,setBirthdate] = useState('');
     const [temperament,setTemperament] = useState('');
     const [enclosure,setEnclosure] = useState('');
     const [keeperID,setKeeperID] = useState('');
+    const history = useHistory();
 
     const {data: keepers,isLoading,error} = useFetch(`http://localhost:8080/keeper`);
+    const{refresh} = animalData;
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -21,10 +25,9 @@ const CreateAnimal = () => {
             method:'POST',
             headers:{"Content-Type":"application/json"},
             body: JSON.stringify(animal)
-        }).then(() => {
-            console.log('new animal added')
-        })
-        console.log(animal);
+        }).then(()=>refresh())
+
+        history.push('/');
     }
 
     return (

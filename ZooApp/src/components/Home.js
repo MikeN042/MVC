@@ -1,10 +1,11 @@
 import AnimalList from "./AnimalList";
 import useFetch from "../hooks/useFetch";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
-const Home = () => {
 
+const Home = ({animalData}) => {
+    const {data: animals,isLoading,error,refresh} = animalData
 
-const {data: animals,isLoading,error} = useFetch('http://localhost:8080/animal')
 
     return ( 
         <div className="home">

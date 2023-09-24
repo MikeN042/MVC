@@ -1,10 +1,22 @@
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import useFetch from "../hooks/useFetch";
+import FeedingList from "./FeedingList"
 
 
-const AnimalDetails = () => {
+const AnimalDetails = ({animalData}) => {
     const {id} = useParams();
     const {data: animal,isLoading,error} = useFetch(`http://localhost:8080/animal/${id}`);
+    const {refresh} = animalData;
+    const history = useHistory();
+
+    const handleDelete = () => {
+        fetch(`http://localhost:8080/animal/delete/${id}`,{
+            method:"DELETE"
+        }).then(()=>{
+            refresh();
+            history.push('/');
+        })
+    }
     
     return (
         <div className='animal-details'>
@@ -35,6 +47,8 @@ const AnimalDetails = () => {
                         <p>{animal.keeperFirstName}</p>
                     </div>
                 </div>
+                <button onClick={handleDelete}>Delete Animal</button>
+                <FeedingList id={animal.id} keeperID={animal.keeperID} animalData={animalData}/>
                 </div>
 
             )}

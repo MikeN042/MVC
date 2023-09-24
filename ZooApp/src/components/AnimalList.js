@@ -5,7 +5,7 @@ const AnimalList = ({animals,keeper,handleDelete}) => {
 
     return ( 
         <div className='animal-list'>
-            <h2>{keeper}</h2>
+            <h2>Animals</h2>
             {animals.map((animal) => (
                 <div className = 'animal-preview' key={animal.id}>
                     <Link to={`/animal/${animal.id}`}>
