@@ -1,6 +1,7 @@
 ZooFeeder App
 
 A bit of practice with full stack development.
+TLDR - Watch the video at the bottom
 
 About:
 This repo is intended for me to brush the dust off my REACT, JAVA, and design pattern skills.
@@ -28,3 +29,6 @@ As of 9/24/23 I've reach the MVP for the project. However, I plan to continue us
 2.  REDUX implentation in the REACT portion of the project
 3.  User Sign in and Creation
 4.  Frontend styling
+
+Demo:
+https://img.youtube.com/vi/UqDk4cJz-7Y/hqdefault.jpg
