@@ -118,7 +118,6 @@ public class AnimalController {
 		LocalDateTime feedingTime = LocalDateTime.now();
 		Animal animalUpdate = animal.get();
 		animalUpdate.setLastFeedingTime(feedingTime);
-		System.out.println(animalUpdate.getLastFeedingTime());
 		animalRepo.save(animalUpdate);
 		
 		feedingRepo.save(new Feeding(user.get(),animalUpdate,feedingTime));
