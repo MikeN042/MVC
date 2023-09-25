@@ -31,4 +31,4 @@ As of 9/24/23 I've reach the MVP for the project. However, I plan to continue us
 4.  Frontend styling
 
 Demo:
-https://img.youtube.com/vi/UqDk4cJz-7Y/hqdefault.jpg
+[![Watch the video](https://img.youtube.com/vi/UqDk4cJz-7Y/maxresdefault.jpg)](https://youtu.be/UqDk4cJz-7Y)
