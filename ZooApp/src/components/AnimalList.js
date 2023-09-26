@@ -11,7 +11,7 @@ const AnimalList = ({animals,keeper,handleDelete}) => {
                     <Link to={`/animal/${animal.id}`}>
                         <h2>{animal.name}</h2>
                         <p>Enclolsure: {animal.enclosure}, Temperament:
-                            <span style={animal.temperamentWarning === 1 ? {"fontWeight":"bold","color":"#f1356d"}:{} }> 
+                            <span className={animal.temperamentWarning === 1 ? "animal-warning":"" }> 
                             {` ${animal.temperament}`}
                             </span> </p>
                         <p>Last Fed: {animal.lastFeedingTime}</p> 
