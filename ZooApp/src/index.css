@@ -52,6 +52,11 @@
   text-decoration: none;
 }
 
+.animal-warning {
+  color:#f1356d;
+  font-weight:bold;
+}
+
 .animal-details .col span{
   font-size:25px;
 }

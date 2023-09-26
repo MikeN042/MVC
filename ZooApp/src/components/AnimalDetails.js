@@ -32,7 +32,7 @@ const AnimalDetails = ({animalData}) => {
                     </div>
                     <div className="col">
                     <span > Temperament</span>
-                        <p style={animal.temperamentWarning === 1 ?{'color':'#f1356d',"fontWeight":"bold"}:{}}>{animal.temperament}</p>
+                        <p className={animal.temperamentWarning === 1 ?"animal-warning":""}>{animal.temperament}</p>
                     </div>
                     <div className="col">
                     <span >Species</span>
