@@ -5,29 +5,36 @@ import {useHistory} from 'react-router-dom';
 
 
 const CreateAnimal = ({animalData}) => {
-    const [name,setName] = useState('');
-    const [species,setSpecies] = useState('');
-    const [birthdate,setBirthdate] = useState('');
-    const [temperament,setTemperament] = useState('');
-    const [enclosure,setEnclosure] = useState('');
-    const [keeperID,setKeeperID] = useState('');
-    const history = useHistory();
-
     const {data: keepers,isLoading,error} = useFetch(`http://localhost:8080/keeper`);
     const{refresh} = animalData;
-    
-
+    const history = useHistory();
+    const [formData,setFormData] = useState({
+        name:'',
+        species:'',
+        birthdate:'',
+        temperament:'',
+        enclosure:'',
+        keeperID:''
+    })
+   
     const handleSubmit = (e) => {
         e.preventDefault();
-        const animal = {name,species,birthdate,temperament,enclosure, keeperID};
 
         fetch('http://localhost:8080/animal/new',{
             method:'POST',
             headers:{"Content-Type":"application/json"},
-            body: JSON.stringify(animal)
+            body: JSON.stringify(formData)
         }).then(()=>refresh())
 
         history.push('/');
+    }
+
+    const handleChange = (e) => {
+        const {name,value} = e.target;
+        setFormData({
+            ...formData,
+            [name]:value, 
+        })
     }
 
     return (
@@ -37,14 +44,14 @@ const CreateAnimal = ({animalData}) => {
             {isLoading && <div>Loading...</div>}
             {keepers &&
             <form onSubmit={handleSubmit}>
-                <label>Name:</label>
-                <input type="text" required onChange={(e)=>setName(e.target.value)} />
+                <label htmlFor="name">Name:</label>
+                <input required  type="text" id="name" name="name" value={formData.name} onChange={handleChange} />
                 <label>Species:</label>
-                <input type="text" required onChange={(e)=>setSpecies(e.target.value)} />
+                <input required type="text" id="species" name="species" value={formData.species}  onChange={handleChange} />
                 <label>Birthdate:</label>
-                <input type="date" required onChange={(e)=>setBirthdate(e.target.value)} />
+                <input required type="date" id="birthdate" name="birthdate"  value={formData.birthdate} onChange={handleChange} />
                 <label>Temperament:</label>
-                <select  required onChange={(e)=>setTemperament(e.target.value)}>
+                <select   id="temperament" name="temperament" value={formData.temperament} onChange={handleChange}>
                     <option value=""> Select an option</option>
                     <option value="Even">Even</option>
                     <option value="Playful">Playful</option>
@@ -53,9 +60,9 @@ const CreateAnimal = ({animalData}) => {
                     <option value="Deadly">Deadly</option>
                 </select>
                 <label>Enclosure:</label>
-                <input type="text" required onChange={(e)=>setEnclosure(e.target.value)} />
+                <input required type="text" id="enclosure" name="enclosure" value={formData.enclosure} onChange={handleChange} />
                 <label>Keeper:</label>
-                <select  required onChange={(e)=>setKeeperID(e.target.value)}>
+                <select required id="keeperID" name="keeperID" value ={formData.keeperID} onChange={handleChange}>
                     <option value=""> Select an option</option>
                     {keepers.map(keeper=>(
                         <option value={keeper.id}>{keeper.firstName + ' ' + keeper.lastName + ' - ' + keeper.title}</option>
