@@ -38,7 +38,7 @@ const CreateAnimal = ({animalData}) => {
     }
 
     return (
-        <div className="create-animal">
+        <div className="create-animal" data-testid='create-animal'>
             <h1>Register New Animal</h1>
             {error && <div>{error}</div>}
             {isLoading && <div>Loading...</div>}

@@ -19,7 +19,7 @@ const AnimalDetails = ({animalData}) => {
     }
     
     return (
-        <div className='animal-details'>
+        <div className='animal-details' data-testid='animal-details'>
             {error &&  <div>{error}</div>}
             {isLoading && <div>Loading...</div>}
             {animal && (

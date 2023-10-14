@@ -4,7 +4,7 @@ const Home = ({animalData}) => {
     const {data: animals,isLoading,error} = animalData
 
     return ( 
-        <div className="home">
+        <div className="home" data-testid='home'>
             {error &&  <div>{error}</div>}
             {isLoading && <div>Loading...</div>}
             {animals && <AnimalList animals={animals} keeper='Bilbo'/>}
