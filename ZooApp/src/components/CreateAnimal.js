@@ -69,7 +69,7 @@ const CreateAnimal = ({animalData}) => {
                     )
                     )}
                 </select>
-                <button data-testid='create-animal-save'>Save</button>
+                <button data-testid='create-animal-save-bt'>Save</button>
             </form>
 
             }
