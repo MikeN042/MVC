@@ -1,5 +1,5 @@
 describe('App component', () => {
-/*     it ('renders the create animal component on navbar button press then redirects to home page on navbar button press', () => {
+     it ('renders the create animal component on navbar button press then redirects to home page on navbar button press', () => {
         cy.visit('http://localhost:3000/')
         cy.get('[data-testid="navbar-create-bt"]').click()
         cy.get('[data-testid="create-animal"]').should('exist')
@@ -49,7 +49,7 @@ describe('App component', () => {
         cy.get('[data-testid="animal-details-keeper"]').should('have.text','Bilbo')
     })
 
-         */
+         
 
     it('renders/creates/deletes feedings on the animal details page',()=>{
         cy.visit('http://localhost:3000/')
