@@ -1,7 +1,18 @@
 import {Link} from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchData } from '../redux/animal'
+import React, { useEffect } from 'react';
 
-const AnimalList = ({animals,keeper,handleDelete}) => {
-    
+
+const AnimalList = () => {
+
+    const dispatch = useDispatch();
+    const { animals, status, error } = useSelector((state) => state.animal);
+
+    useEffect(() => {
+        dispatch(fetchData());
+      }, [dispatch]);
+
 
     return ( 
         <div className='animal-list' data-testid='animal-list'>
