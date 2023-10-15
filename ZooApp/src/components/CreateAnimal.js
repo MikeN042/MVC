@@ -38,20 +38,20 @@ const CreateAnimal = ({animalData}) => {
     }
 
     return (
-        <div className="create-animal">
+        <div className="create-animal" data-testid='create-animal'>
             <h1>Register New Animal</h1>
-            {error && <div>{error}</div>}
-            {isLoading && <div>Loading...</div>}
+            {error && <div data-testid='create-animal-loading-error'>{error}</div>}
+            {isLoading && <div data-testid='create-animal-loading'>Loading...</div>}
             {keepers &&
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Name:</label>
-                <input required  type="text" id="name" name="name" value={formData.name} onChange={handleChange} />
+                <input required  type="text" id="name" name="name" value={formData.name} onChange={handleChange} data-testid='create-animal-input-name' />
                 <label>Species:</label>
-                <input required type="text" id="species" name="species" value={formData.species}  onChange={handleChange} />
+                <input required type="text" id="species" name="species" value={formData.species}  onChange={handleChange} data-testid='create-animal-input-species' />
                 <label>Birthdate:</label>
-                <input required type="date" id="birthdate" name="birthdate"  value={formData.birthdate} onChange={handleChange} />
+                <input required type="date" id="birthdate" name="birthdate"  value={formData.birthdate} onChange={handleChange} data-testid='create-animal-input-birthdate' />
                 <label>Temperament:</label>
-                <select   id="temperament" name="temperament" value={formData.temperament} onChange={handleChange}>
+                <select   id="temperament" name="temperament" value={formData.temperament} onChange={handleChange} data-testid='create-animal-input-temperament'>
                     <option value=""> Select an option</option>
                     <option value="Even">Even</option>
                     <option value="Playful">Playful</option>
@@ -59,17 +59,17 @@ const CreateAnimal = ({animalData}) => {
                     <option value="Agressive">Agressive</option>
                     <option value="Deadly">Deadly</option>
                 </select>
-                <label>Enclosure:</label>
-                <input required type="text" id="enclosure" name="enclosure" value={formData.enclosure} onChange={handleChange} />
+                <label >Enclosure:</label> 
+                <input required type="text" id="enclosure" name="enclosure" value={formData.enclosure} onChange={handleChange} data-testid='create-animal-input-enclosure' />
                 <label>Keeper:</label>
-                <select required id="keeperID" name="keeperID" value ={formData.keeperID} onChange={handleChange}>
+                <select required id="keeperID" name="keeperID" value ={formData.keeperID} onChange={handleChange} data-testid='create-animal-input-keeper'> 
                     <option value=""> Select an option</option>
                     {keepers.map(keeper=>(
                         <option value={keeper.id}>{keeper.firstName + ' ' + keeper.lastName + ' - ' + keeper.title}</option>
                     )
                     )}
                 </select>
-                <button>Save</button>
+                <button data-testid='create-animal-save-bt'>Save</button>
             </form>
 
             }

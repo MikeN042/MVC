@@ -19,35 +19,35 @@ const AnimalDetails = ({animalData}) => {
     }
     
     return (
-        <div className='animal-details'>
+        <div className='animal-details' data-testid='animal-details'>
             {error &&  <div>{error}</div>}
             {isLoading && <div>Loading...</div>}
             {animal && (
                 <div className="container text-center">
-                    <h1>{animal.name}</h1>
+                    <h1 data-testid='animal-details-name'>{animal.name}</h1>
                 <div className="row row-cols-3">
                     <div className="col">
                         <span >Enclosure</span> 
-                        <p>{animal.enclosure}</p>
+                        <p data-testid='animal-details-enclosure'>{animal.enclosure}</p>
                     </div>
                     <div className="col">
                     <span > Temperament</span>
-                        <p className={animal.temperamentWarning === 1 ?"animal-warning":""}>{animal.temperament}</p>
+                        <p className={animal.temperamentWarning === 1 ?"animal-warning":""} data-testid='animal-details-temperament'>{animal.temperament}</p>
                     </div>
                     <div className="col">
                     <span >Species</span>
-                        <p>{animal.species}</p>
+                        <p data-testid='animal-details-species'>{animal.species}</p>
                     </div>
                     <div className="col">
                     <span >Age</span>
-                        <p>{animal.age}</p>
+                        <p data-testid='animal-details-age'>{animal.age}</p>
                     </div>
                     <div className="col">
                     <span >Keeper</span>
-                        <p>{animal.keeperFirstName}</p>
+                        <p data-testid='animal-details-keeper'>{animal.keeperFirstName}</p>
                     </div>
                 </div>
-                <button onClick={handleDelete}>Delete Animal</button>
+                <button onClick={handleDelete} data-testid='animal-details-delete-bt'>Delete Animal</button>
                 <FeedingList id={animal.id} keeperID={animal.keeperID} animalData={animalData}/>
                 </div>
 
