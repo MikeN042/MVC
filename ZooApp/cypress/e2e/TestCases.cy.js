@@ -1,6 +1,11 @@
 describe('App component', () => {
-    it ('renders the create animal component on navbar button press then redirects to home page on navbar button press', () => {
+
+    beforeEach(() => {
         cy.visit('http://localhost:3000/')
+
+    })
+
+    it ('renders the create animal component on navbar button press then redirects to home page on navbar button press', () => {
         cy.get('[data-testid="navbar-create-bt"]').click()
         cy.get('[data-testid="create-animal"]').should('exist')
         cy.get('[data-testid="navbar-home-bt"]').click()
@@ -9,7 +14,6 @@ describe('App component', () => {
 
 
     it('renders the create animal component;  accepts/requires all inputs; then redirects to home page on save',() => {
-        cy.visit('http://localhost:3000/')
         cy.get('[data-testid="navbar-create-bt"]').click()
         cy.get('[data-testid="create-animal"]').should('exist')
         cy.get('[data-testid="create-animal-save-bt"]').click()
@@ -40,7 +44,6 @@ describe('App component', () => {
 
 
     it('renders the Test Animal in the Animal List',()=>{
-        cy.visit('http://localhost:3000/')
         cy.get('[data-testid="animal-list-animal-Test Animal"]').click()
         cy.get('[data-testid="animal-details-name"]').should('have.text','Test Animal')
         cy.get('[data-testid="animal-details-enclosure"]').should('have.text','Test Enclosure')
@@ -52,7 +55,6 @@ describe('App component', () => {
          
 
     it('renders/creates/deletes feedings on the animal details page',()=>{
-        cy.visit('http://localhost:3000/')
         cy.get('[data-testid="animal-list-animal-Test Animal"]').click()
         cy.get('[data-testid="feeding-list-add-bt"]').click()
         cy.get('[data-testid="feeding-list-feedings"]').should('have.length',1)
@@ -65,7 +67,6 @@ describe('App component', () => {
     }) 
 
     it('renders animal info correctly and renders the last feeding on the Animal List',()=>{
-        cy.visit('http://localhost:3000/')
         cy.get('[data-testid="animal-list-animal-Test Animal-name"]').should('have.text','Test Animal')
         cy.get('[data-testid="animal-list-animal-Test Animal-enclosure"]').should('have.text','Enclolsure: Test Enclosure, Temperament: Even ')
         cy.get('[data-testid="animal-list-animal-Test Animal-last-fed"]').invoke('text').then(text => expect(text.length).to.be.at.least(8))
@@ -73,7 +74,6 @@ describe('App component', () => {
 
     
     it('deletes animals',()=>{
-        cy.visit('http://localhost:3000/')
         cy.get('[data-testid="animal-list-animal-Test Animal"]').click()
         cy.get('[data-testid="animal-details-delete-bt"]').click()
         cy.get('[data-testid="home"]').should('exist') 
