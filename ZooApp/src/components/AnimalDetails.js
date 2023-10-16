@@ -3,7 +3,7 @@ import useFetch from "../hooks/useFetch";
 import FeedingList from "./FeedingList"
 import { useSelector, useDispatch } from 'react-redux'
 import React, { useEffect } from 'react';
-import { selectAnimalByID } from "../redux/animalSlice";
+import { selectAnimalByID, deleteAnimal } from "../redux/animalSlice";
 
 
 
@@ -18,11 +18,7 @@ const AnimalDetails = ({animalData}) => {
 
 
     const handleDelete = () => {
-        fetch(`http://localhost:8080/animal/delete/${id}`,{
-            method:"DELETE"
-        }).then(()=>{
-            history.push('/');
-        })
+        dispatch(deleteAnimal(id)).then(() => history.push('/'))
     }
     
     return (

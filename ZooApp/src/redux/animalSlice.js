@@ -24,6 +24,17 @@ export const animalsSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
+      .addCase(deleteAnimal.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(deleteAnimal.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+      })
+      .addCase(deleteAnimal.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+        console.log('here');
+      })
   },
 })
 export default animalsSlice.reducer
@@ -35,5 +46,14 @@ export const fetchAnimals  =  createAsyncThunk('animals/fetchAnimals', async () 
   return data;
 });
 
+export const deleteAnimal  =  createAsyncThunk('animals/deleteAnimal', async (animalID) => {
+  const response = await fetch(`http://localhost:8080/animal/delete/${animalID}`, {
+    method: 'DELETE',
+  });
+  const data = await response;
+  return animalID;
+});
+
 export const selectAllAnimals = state => state.animals
 export const selectAnimalByID = ( state, animalID ) => state.animals.animals.find(a => a.id === animalID)
+
