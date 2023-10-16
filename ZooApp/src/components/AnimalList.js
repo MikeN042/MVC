@@ -1,23 +1,27 @@
 import {Link} from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchData } from '../redux/animal'
+import { fetchAnimals, selectAllAnimals } from '../redux/animalSlice'
 import React, { useEffect } from 'react';
+
 
 
 const AnimalList = () => {
 
     const dispatch = useDispatch();
-    const { animals, status, error } = useSelector((state) => state.animal);
+    const { animals, status, error } = useSelector(selectAllAnimals);
 
     useEffect(() => {
-        dispatch(fetchData());
+        dispatch(fetchAnimals());
       }, [dispatch]);
+
 
 
     return ( 
         <div className='animal-list' data-testid='animal-list'>
             <h2>Animals</h2>
-            {animals.map((animal) => (
+            {error &&  <div>{error}</div>}
+            {status === 'loading' && <div>Loading...</div>}
+            {animals.map(animal => (
                 <div className = 'animal-preview' key={animal.id} data-testid={`animal-list-animal-${animal.name}`}>
                     <Link to={`/animal/${animal.id}`}>
                         <h2 data-testid={`animal-list-animal-${animal.name}-name`}>{animal.name}</h2>

@@ -1,27 +1,32 @@
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import useFetch from "../hooks/useFetch";
 import FeedingList from "./FeedingList"
+import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect } from 'react';
+import { selectAnimalByID } from "../redux/animalSlice";
+
 
 
 const AnimalDetails = ({animalData}) => {
     const {id} = useParams();
-    const {data: animal,isLoading,error} = useFetch(`http://localhost:8080/animal/${id}`);
-    const {refresh} = animalData;
     const history = useHistory();
+
+    const dispatch = useDispatch();
+    const animal = useSelector(state => selectAnimalByID(state,id))
+
+
+
 
     const handleDelete = () => {
         fetch(`http://localhost:8080/animal/delete/${id}`,{
             method:"DELETE"
         }).then(()=>{
-            refresh();
             history.push('/');
         })
     }
     
     return (
         <div className='animal-details' data-testid='animal-details'>
-            {error &&  <div>{error}</div>}
-            {isLoading && <div>Loading...</div>}
             {animal && (
                 <div className="container text-center">
                     <h1 data-testid='animal-details-name'>{animal.name}</h1>

@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import animalReducer from './animal'
+import animalsReducer from './animalSlice'
 
 export default configureStore({
     reducer: {
-        animal: animalReducer,
+        animals: animalsReducer,
     }
 });
