@@ -68,11 +68,12 @@ public class AnimalController {
 	}
 	
 	@PostMapping("/new")
-	public ResponseEntity<String> addAnimal(@RequestBody AnimalDTO animalDTO) {
+	public ResponseEntity<Animal> addAnimal(@RequestBody AnimalDTO animalDTO) {
 		Optional<Keeper> keeper = keeperRepo.findById(animalDTO.getKeeperID());
 		
+		Animal animal = new Animal();
+		
 		if(keeper.isPresent()) {
-			Animal animal = new Animal();
 			animal.setName(animalDTO.getName());
 			animal.setSpecies(animalDTO.getSpecies());
 			animal.setBirthdate(animalDTO.getBirthdate());
@@ -80,17 +81,17 @@ public class AnimalController {
 			animal.setTemperament(animalDTO.getTemperament());
 			animal.setEnclosure(animalDTO.getEnclosure());
 			animalRepo.save(animal);
-			return new ResponseEntity<>("Animal Added",HttpStatus.CREATED);
+			return new ResponseEntity<Animal>(animal,HttpStatus.CREATED);
 		}
 
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Animal>(HttpStatus.NOT_FOUND);
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<String> deleteAnimal(@PathVariable Long id){
+	public ResponseEntity<Long> deleteAnimal(@PathVariable Long id){
 		feedingRepo.deleteAll(feedingRepo.findByAnimalId(id));
 		animalRepo.deleteById(id);
-		return new ResponseEntity<>("Removed",HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(id,HttpStatus.ACCEPTED);
 	}
 	
 	@GetMapping("/{id}/feedings")
@@ -102,17 +103,16 @@ public class AnimalController {
 		}
 		
 	@PostMapping("/{id}/feed")
-	public ResponseEntity<String> feedAnimal(@PathVariable Long id, @RequestParam Long keeperID) {
-		
+	public ResponseEntity<Feeding> feedAnimal(@PathVariable Long id, @RequestParam Long keeperID) {
 		
 		Optional<Keeper> user = keeperRepo.findById(keeperID);		
 		if (!user.isPresent()){
-			return new ResponseEntity<>("Keeper not found",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Feeding>(HttpStatus.NOT_FOUND);
 		}
 		
 		Optional<Animal> animal = animalRepo.findById(id);
 		if (!animal.isPresent()) {
-			return new ResponseEntity<>("Animal not found",HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Feeding>(HttpStatus.NOT_FOUND);
 		}
 		
 		LocalDateTime feedingTime = LocalDateTime.now();
@@ -120,13 +120,14 @@ public class AnimalController {
 		animalUpdate.setLastFeedingTime(feedingTime);
 		animalRepo.save(animalUpdate);
 		
-		feedingRepo.save(new Feeding(user.get(),animalUpdate,feedingTime));
-		return new ResponseEntity<>("Feeding Recorded",HttpStatus.ACCEPTED);
+		Feeding feeding = new Feeding(user.get(),animalUpdate,feedingTime);
+		feedingRepo.save(feeding);
+		return new ResponseEntity<Feeding>(feeding,HttpStatus.ACCEPTED);
 	}
 	
 	@DeleteMapping("/feedings/delete/{id}")
-	public ResponseEntity<String>  deleteFeeding(@PathVariable Long id){
+	public ResponseEntity<Long>  deleteFeeding(@PathVariable Long id){
 		feedingRepo.deleteById(id);
-		return new ResponseEntity<>("Removed",HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(id,HttpStatus.ACCEPTED);
 	}
 }
