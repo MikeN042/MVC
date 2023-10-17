@@ -18,7 +18,6 @@ export const feedingsSlice = createSlice({
       })
       .addCase(fetchfeedings.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        console.log(action.payload);
         state.feedings = action.payload;
       })
       .addCase(fetchfeedings.rejected, (state, action) => {
