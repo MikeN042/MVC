@@ -1,13 +1,25 @@
 import { useState } from "react"
-import useFetch from "../hooks/useFetch";
+import React, { useEffect } from 'react';
 import {useHistory} from 'react-router-dom';
+import { addAnimal, selectAllAnimals } from "../redux/animalSlice";
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchKeepers, selectAllKeepers } from "../redux/keeperSlice";
+
 
 
 
 const CreateAnimal = ({animalData}) => {
-    const {data: keepers,isLoading,error} = useFetch(`http://localhost:8080/keeper`);
-    const{refresh} = animalData;
+    const dispatch = useDispatch();
     const history = useHistory();
+
+    const { keepers } = useSelector(selectAllKeepers);
+    const { status, error } = useSelector(selectAllAnimals);
+
+    useEffect(() => {
+        dispatch(fetchKeepers());
+      }, [dispatch]);
+
+    
     const [formData,setFormData] = useState({
         name:'',
         species:'',
@@ -19,14 +31,11 @@ const CreateAnimal = ({animalData}) => {
    
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        fetch('http://localhost:8080/animal/new',{
-            method:'POST',
-            headers:{"Content-Type":"application/json"},
-            body: JSON.stringify(formData)
-        }).then(()=>refresh())
-
-        history.push('/');
+        dispatch(addAnimal(formData)).then(() =>{
+            if(status === 'succeeded'){
+                history.push('/')
+            }
+        });
     }
 
     const handleChange = (e) => {
@@ -40,8 +49,6 @@ const CreateAnimal = ({animalData}) => {
     return (
         <div className="create-animal" data-testid='create-animal'>
             <h1>Register New Animal</h1>
-            {error && <div data-testid='create-animal-loading-error'>{error}</div>}
-            {isLoading && <div data-testid='create-animal-loading'>Loading...</div>}
             {keepers &&
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Name:</label>
@@ -73,6 +80,8 @@ const CreateAnimal = ({animalData}) => {
             </form>
 
             }
+            {error && <div data-testid='create-animal-loading-error'>{error}</div>}
+
         </div>
     )
 }
