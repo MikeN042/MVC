@@ -1,21 +1,15 @@
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
-import useFetch from "../hooks/useFetch";
 import FeedingList from "./FeedingList"
 import { useSelector, useDispatch } from 'react-redux'
-import React, { useEffect } from 'react';
 import { selectAnimalByID, deleteAnimal } from "../redux/animalSlice";
 
 
 
-const AnimalDetails = ({animalData}) => {
+const AnimalDetails = () => {
     const {id} = useParams();
     const history = useHistory();
-
     const dispatch = useDispatch();
     const animal = useSelector(state => selectAnimalByID(state,id))
-
-
-
 
     const handleDelete = () => {
         dispatch(deleteAnimal(id)).then(() => history.push('/'))
