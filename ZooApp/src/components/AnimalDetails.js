@@ -49,7 +49,7 @@ const AnimalDetails = ({animalData}) => {
                     </div>
                 </div>
                 <button onClick={handleDelete} data-testid='animal-details-delete-bt'>Delete Animal</button>
-                <FeedingList id={animal.id} keeperID={animal.keeperID} animalData={animalData}/>
+                <FeedingList animalID={animal.id} keeperID={animal.keeperID}/>
                 </div>
 
             )}
