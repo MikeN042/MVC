@@ -1,20 +1,12 @@
 import {Link} from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'
-import { fetchAnimals, selectAllAnimals } from '../redux/animalSlice'
-import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux'
+import { selectAllAnimals } from '../redux/animalSlice'
 
 
 
 const AnimalList = () => {
 
-    const dispatch = useDispatch();
     const { animals, status, error } = useSelector(selectAllAnimals);
-
-    useEffect(() => {
-        dispatch(fetchAnimals());
-      }, [dispatch]);
-
-
 
     return ( 
         <div className='animal-list' data-testid='animal-list'>

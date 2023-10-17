@@ -1,24 +1,18 @@
 import { useState } from "react"
-import React, { useEffect } from 'react';
 import {useHistory} from 'react-router-dom';
 import { addAnimal, selectAllAnimals } from "../redux/animalSlice";
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchKeepers, selectAllKeepers } from "../redux/keeperSlice";
+import { selectAllKeepers } from "../redux/keeperSlice";
 
 
 
 
-const CreateAnimal = ({animalData}) => {
+const CreateAnimal = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
     const { keepers } = useSelector(selectAllKeepers);
     const { status, error } = useSelector(selectAllAnimals);
-
-    useEffect(() => {
-        dispatch(fetchKeepers());
-      }, [dispatch]);
-
     
     const [formData,setFormData] = useState({
         name:'',
@@ -72,7 +66,7 @@ const CreateAnimal = ({animalData}) => {
                 <select required id="keeperID" name="keeperID" value ={formData.keeperID} onChange={handleChange} data-testid='create-animal-input-keeper'> 
                     <option value=""> Select an option</option>
                     {keepers.map(keeper=>(
-                        <option value={keeper.id}>{keeper.firstName + ' ' + keeper.lastName + ' - ' + keeper.title}</option>
+                        <option key={keeper.id} value={keeper.id}>{keeper.firstName + ' ' + keeper.lastName + ' - ' + keeper.title}</option>
                     )
                     )}
                 </select>
