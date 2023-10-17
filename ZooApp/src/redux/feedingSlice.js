@@ -58,7 +58,7 @@ export const fetchfeedings  =  createAsyncThunk('feedings/fetchfeedings', async 
 });
 
 export const deleteFeeding  =  createAsyncThunk('feedings/deleteFeeding', async (feedingID) => {
-  const response = await fetch(`http://localhost:8080/animal/feedings/delete/${feedingID}`, {
+ await fetch(`http://localhost:8080/animal/feedings/delete/${feedingID}`, {
     method: 'DELETE',
   });
   return feedingID
