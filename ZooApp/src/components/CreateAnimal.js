@@ -52,7 +52,7 @@ const CreateAnimal = () => {
                 <label>Birthdate:</label>
                 <input required type="date" id="birthdate" name="birthdate"  value={formData.birthdate} onChange={handleChange} data-testid='create-animal-input-birthdate' />
                 <label>Temperament:</label>
-                <select   id="temperament" name="temperament" value={formData.temperament} onChange={handleChange} data-testid='create-animal-input-temperament'>
+                <select required id="temperament" name="temperament" value={formData.temperament} onChange={handleChange} data-testid='create-animal-input-temperament'>
                     <option value=""> Select an option</option>
                     <option value="Even">Even</option>
                     <option value="Playful">Playful</option>
