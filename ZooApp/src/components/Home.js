@@ -1,13 +1,10 @@
 import AnimalList from "./AnimalList";
 
-const Home = ({animalData}) => {
-    const {data: animals,isLoading,error} = animalData
+const Home = () => {
 
     return ( 
         <div className="home" data-testid='home'>
-            {error &&  <div>{error}</div>}
-            {isLoading && <div>Loading...</div>}
-            {animals && <AnimalList animals={animals} keeper='Bilbo'/>}
+             <AnimalList/>
         </div>
 
      );

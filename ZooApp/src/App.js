@@ -4,14 +4,21 @@ import CreateAnimal from './components/CreateAnimal';
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom'
 import AnimalDetails from './components/AnimalDetails';
 import NotFound from './components/NotFound';
-import useFetch from "./hooks/useFetch";
+import { useDispatch } from "react-redux";
+import { fetchAnimals } from "./redux/animalSlice";
+import { fetchKeepers } from "./redux/keeperSlice";
+import React, { useEffect } from 'react';
 
 
 
 function App() {
 
-  const data = useFetch('http://localhost:8080/animal')
-  const {refresh} = data
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+      dispatch(fetchAnimals());
+      dispatch(fetchKeepers());
+    }, [dispatch]);
 
 
   return (
@@ -21,13 +28,13 @@ function App() {
         <div className="content">
           <Switch>
             <Route exact path="/">
-              <Home animalData={data} />
+              <Home />
             </Route>
             <Route path="/create/animal">
-              <CreateAnimal animalData={data}  />
+              <CreateAnimal />
             </Route>
             <Route path="/animal/:id" >
-              <AnimalDetails animalData={data}  />
+              <AnimalDetails />
             </Route>
             <Route path="*">
               <NotFound />

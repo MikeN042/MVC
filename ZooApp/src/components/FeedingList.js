@@ -1,34 +1,29 @@
 import useFetch from "../hooks/useFetch";
+import { selectFeedingsByAnimalID, selectAllFeedings, fetchfeedings, deleteFeeding, addFeeding } from "../redux/feedingSlice";
+import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect } from 'react';
 
 
-const FeedingList = ({id,keeperID,animalData}) => {
-    const{data,isLoading,error,refresh} = useFetch(`http://localhost:8080/animal/${id}/feedings`);
-    const{refresh: animalDataRefresh} = animalData;
-    const handleDeleteClick = (id)=> {
-        fetch(`http://localhost:8080/animal/feedings/delete/${id}`,{
-            method:"DELETE"
-         }).then(()=>{
-            refresh();
-            animalDataRefresh();
-         })
-    }
 
-    const handleAddFeedingClick = () => {
-        fetch(`http://localhost:8080/animal/${id}/feed?keeperID=${keeperID}`,{
-            method:"POST"
-        }).then(()=>{
-            refresh();
-            animalDataRefresh();
-        })
-    }
+const FeedingList = ({animalID,keeperID}) => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchfeedings(animalID));
+      }, [dispatch]);
+
+    const { feedings, status, error } = useSelector(selectAllFeedings);
+
+    const handleDeleteClick = (id) => dispatch(deleteFeeding(id))
+    const handleAddFeedingClick = () => dispatch(addFeeding({animalID,keeperID}))
+
     return ( 
         <div className='feeding-list' data-testid='feeding-list'>
            <h3>Feedings</h3>
            <button onClick={handleAddFeedingClick} data-testid='feeding-list-add-bt'>Add Feeding</button>
-           {error && <div>{error}</div>}
-           {isLoading && <div>Loading...</div>}
-           {data && 
-           data.map(feeding=> (
+           {status === 'loading' && <div>Loading...</div>} 
+            {feedings && 
+           feedings.map(feeding=> (
             <div className="feeding container text-center" key={feeding.id} data-testid='feeding-list-feedings'>
                 <div className="row row-cols-3">
                     <div className="col">{feeding.date}</div>
@@ -37,9 +32,12 @@ const FeedingList = ({id,keeperID,animalData}) => {
                 </div>
             </div>
            )
-           )}       
+           )} 
+        {error && <div>{error}</div>}     
         </div>    
      );
+
+
 }
  
 export default FeedingList;

@@ -25,8 +25,8 @@ Future Plans:
 As of 9/24/23 I've reach the MVP for the project. However, I plan to continue using it for practice.  
  Future enhances road map:
 
-1.  automated test cases for both backend and frontend.  (frontend completed using cyrpress; backend is todo)
-2.  REDUX implentation in the REACT portion of the project (completed in pull request)
+1.  automated test cases for both backend and frontend. (frontend completed using cyrpress; backend is todo)
+2.  REDUX implentation in the REACT portion of the project (completed)
 3.  User Sign in and Creation
 4.  Frontend styling
 

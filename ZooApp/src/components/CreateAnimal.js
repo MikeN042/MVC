@@ -1,13 +1,19 @@
 import { useState } from "react"
-import useFetch from "../hooks/useFetch";
 import {useHistory} from 'react-router-dom';
+import { addAnimal, selectAllAnimals } from "../redux/animalSlice";
+import { useSelector, useDispatch } from 'react-redux'
+import { selectAllKeepers } from "../redux/keeperSlice";
 
 
 
-const CreateAnimal = ({animalData}) => {
-    const {data: keepers,isLoading,error} = useFetch(`http://localhost:8080/keeper`);
-    const{refresh} = animalData;
+
+const CreateAnimal = () => {
+    const dispatch = useDispatch();
     const history = useHistory();
+
+    const { keepers } = useSelector(selectAllKeepers);
+    const { status, error } = useSelector(selectAllAnimals);
+    
     const [formData,setFormData] = useState({
         name:'',
         species:'',
@@ -19,14 +25,11 @@ const CreateAnimal = ({animalData}) => {
    
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        fetch('http://localhost:8080/animal/new',{
-            method:'POST',
-            headers:{"Content-Type":"application/json"},
-            body: JSON.stringify(formData)
-        }).then(()=>refresh())
-
-        history.push('/');
+        dispatch(addAnimal(formData)).then(() =>{
+            if(status === 'succeeded'){
+                history.push('/')
+            }
+        });
     }
 
     const handleChange = (e) => {
@@ -40,8 +43,6 @@ const CreateAnimal = ({animalData}) => {
     return (
         <div className="create-animal" data-testid='create-animal'>
             <h1>Register New Animal</h1>
-            {error && <div data-testid='create-animal-loading-error'>{error}</div>}
-            {isLoading && <div data-testid='create-animal-loading'>Loading...</div>}
             {keepers &&
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Name:</label>
@@ -51,7 +52,7 @@ const CreateAnimal = ({animalData}) => {
                 <label>Birthdate:</label>
                 <input required type="date" id="birthdate" name="birthdate"  value={formData.birthdate} onChange={handleChange} data-testid='create-animal-input-birthdate' />
                 <label>Temperament:</label>
-                <select   id="temperament" name="temperament" value={formData.temperament} onChange={handleChange} data-testid='create-animal-input-temperament'>
+                <select required id="temperament" name="temperament" value={formData.temperament} onChange={handleChange} data-testid='create-animal-input-temperament'>
                     <option value=""> Select an option</option>
                     <option value="Even">Even</option>
                     <option value="Playful">Playful</option>
@@ -65,7 +66,7 @@ const CreateAnimal = ({animalData}) => {
                 <select required id="keeperID" name="keeperID" value ={formData.keeperID} onChange={handleChange} data-testid='create-animal-input-keeper'> 
                     <option value=""> Select an option</option>
                     {keepers.map(keeper=>(
-                        <option value={keeper.id}>{keeper.firstName + ' ' + keeper.lastName + ' - ' + keeper.title}</option>
+                        <option key={keeper.id} value={keeper.id}>{keeper.firstName + ' ' + keeper.lastName + ' - ' + keeper.title}</option>
                     )
                     )}
                 </select>
@@ -73,6 +74,8 @@ const CreateAnimal = ({animalData}) => {
             </form>
 
             }
+            {error && <div data-testid='create-animal-loading-error'>{error}</div>}
+
         </div>
     )
 }
