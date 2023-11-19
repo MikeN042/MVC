@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zookeeper.rest.Models.Keeper;
 import com.zookeeper.rest.Repo.KeeperRepo;
+import com.zookeeper.rest.Service.KeeperService;
 
 @RestController
 @RequestMapping("/keeper")
@@ -22,6 +25,8 @@ public class KeeperController {
 	
 	@Autowired
 	private KeeperRepo keeperRepo;
+	@Autowired
+	private KeeperService keeperService;
 	
 
 	@GetMapping
@@ -37,24 +42,18 @@ public class KeeperController {
 	}
 
 	@PutMapping("/update/{id}")
-	public String updateKeeper (@PathVariable long id,@RequestBody Keeper keeper) {
-		Optional<Keeper> optUser = keeperRepo.findById(id);
-		if (!optUser.isPresent()) {
-			return "User of id = " + id + " not found";
+	public ResponseEntity<Long> updateKeeper (@PathVariable long id,@RequestBody Keeper keeper) {
+		String result = keeperService.updateKeeper(id, keeper);
+		if (result != null) {
+			return new ResponseEntity<Long>(id,HttpStatus.ACCEPTED);
 		}
-		Keeper targetUser = optUser.get();
-		targetUser.setFirstName(keeper.getFirstName());
-		targetUser.setLastName(keeper.getLastName());
-		targetUser.setTitle(keeper.getTitle());
-		keeperRepo.save(targetUser);
-		return "Updated!";
+		return new ResponseEntity<Long>(id,HttpStatus.NOT_FOUND);
+
 	}
 	
 	@DeleteMapping("/remove/{id}")
 	public String deleteKeeper (@PathVariable long id) {
-		
-		Keeper targetUser = keeperRepo.findById(id).get();
-		keeperRepo.delete(targetUser);
+		keeperService.deleteKeeper(id);
 		return "User Deleted!";
 	}
 	
